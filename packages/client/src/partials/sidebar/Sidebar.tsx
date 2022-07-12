@@ -184,7 +184,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
             </h3>
             <ul className="mt-3">
               <SidebarLink
-                linkPath={"/"}
+                linkPath={"/history"}
                 label={"sidebar.history"}
                 Icon={RiArchiveFill}
               />

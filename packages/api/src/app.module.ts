@@ -20,6 +20,7 @@ import * as passport from 'passport';
 import * as RedisStore from 'connect-redis';
 import * as path from 'path';
 import { LangModule } from './lang/lang.module';
+import { HistoryModule } from './history/history.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { LangModule } from './lang/lang.module';
     CarHistoryModule,
     AuthModule,
     CaslModule,
+    HistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

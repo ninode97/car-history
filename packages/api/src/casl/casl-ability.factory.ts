@@ -15,6 +15,7 @@ import {
   Company,
   Model,
   UserRole,
+  HistoryV2,
 } from '@prisma/client';
 import { PrismaAbility, Subjects } from '@casl/prisma';
 import { UserRoleEnumeration } from 'src/user/enums/user-role.enum';
@@ -61,6 +62,7 @@ export type PrismaSubjects = Subjects<{
   Model: Model;
   CodeForAccounting: CodeForAccounting;
   Company: Company;
+  HistoryV2: HistoryV2;
 }>;
 
 export type PrismaAppAbility = PrismaAbility<[string, PrismaSubjects]>;

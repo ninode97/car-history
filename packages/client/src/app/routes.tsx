@@ -7,6 +7,7 @@ import CompaniesGrid from "../pages/companies/CompaniesGrid";
 import ViewCompany from "../pages/companies/ViewCompany";
 import Dashboard from "../pages/Dashboard";
 import HistoryFeed from "../pages/feed/HistoryFeed";
+import History from "../pages/history/History";
 import Login from "../pages/Login";
 import CarBrandManagement from "../pages/settings/CarBrandManagement";
 import SettingsPage from "../pages/settings/SettingsPage";
@@ -21,6 +22,10 @@ const routes = (isLoggedIn: boolean) => [
   {
     path: "/",
     element: getRouteElement(<Dashboard />, isLoggedIn),
+  },
+  {
+    path: "/history",
+    element: getRouteElement(<History />, isLoggedIn),
   },
   {
     path: "/cars",

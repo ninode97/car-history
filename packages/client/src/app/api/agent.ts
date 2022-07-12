@@ -16,6 +16,13 @@ import {
 } from "../models/company";
 import { LoginCredentials, LoginResponse } from "../models/general";
 import {
+  GetHistoryRequest,
+  GetHistoryResponse,
+  GetUniquePlatesResponse,
+  PostHistoryRecordRequest,
+  PostHistoryRecordResponse,
+} from "../models/history";
+import {
   CreateUserRequest,
   CreateUserResponse,
   DeleteUserResponse,
@@ -113,6 +120,40 @@ class Agent {
   }
 }
 
+interface ErrorData {
+  message: string;
+}
+
+interface AxiosErrorData {
+  [name: number]: ErrorData;
+  other: {
+    message: string;
+  };
+}
+
+class AxiosErrorHandler {
+  constructor() {}
+
+  isAxiosError(error: any): error is AxiosResponse {
+    return true;
+  }
+
+  handleError(error: any, statusCodeData: AxiosErrorData) {
+    this.isAxiosError(error)
+      ? this.handleAxiosError(error, statusCodeData)
+      : this.handleUnkownError(error, statusCodeData);
+  }
+  handleAxiosError(error: AxiosResponse, statusCodeData: AxiosErrorData) {
+    const statusCode = error.status;
+    const errorData = statusCodeData[statusCode] || statusCodeData.other;
+    ToastMessage("error", errorData.message);
+  }
+  handleUnkownError(error: any, statusCodeData: AxiosErrorData) {
+    ToastMessage("error", statusCodeData.other.message);
+  }
+}
+
+const axiosErrorHandler = new AxiosErrorHandler();
 const agent = new Agent();
 
 const Car = {
@@ -176,42 +217,23 @@ const User = {
   },
 };
 
-interface ErrorData {
-  message: string;
-}
-
-interface AxiosErrorData {
-  [name: number]: ErrorData;
-  other: {
-    message: string;
-  };
-}
-
-class AxiosErrorHandler {
-  constructor() {}
-
-  isAxiosError(error: any): error is AxiosResponse {
-    return true;
-  }
-
-  handleError(error: any, statusCodeData: AxiosErrorData) {
-    this.isAxiosError(error)
-      ? this.handleAxiosError(error, statusCodeData)
-      : this.handleUnkownError(error, statusCodeData);
-  }
-  handleAxiosError(error: AxiosResponse, statusCodeData: AxiosErrorData) {
-    const statusCode = error.status;
-    const errorData = statusCodeData[statusCode] || statusCodeData.other;
-    ToastMessage("error", errorData.message);
-  }
-  handleUnkownError(error: any, statusCodeData: AxiosErrorData) {
-    ToastMessage("error", statusCodeData.other.message);
-  }
-}
-
-const axiosErrorHandler = new AxiosErrorHandler();
+const History = {
+  endpoint: (plate: string) => `history/${plate}`,
+  get: (dto: GetHistoryRequest): Promise<GetHistoryResponse> => {
+    return agent.get(History.endpoint(dto.plate || "a"));
+  },
+  append: (
+    dto: PostHistoryRecordRequest
+  ): Promise<PostHistoryRecordResponse> => {
+    return agent.post(History.endpoint(dto.plate), dto);
+  },
+  uniquePlates: (): Promise<GetUniquePlatesResponse> => {
+    return agent.get(`history/unique-plates`);
+  },
+};
 
 export default {
+  axiosErrorHandler,
   Car,
   Brand,
   Model,
@@ -219,5 +241,5 @@ export default {
   General,
   Language,
   User,
-  axiosErrorHandler,
+  History,
 };

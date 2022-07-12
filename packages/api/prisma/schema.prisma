@@ -99,3 +99,11 @@ model CodeForAccounting {
   code       String       @unique
   CarHistory CarHistory[]
 }
+
+model HistoryV2 {
+  id       Int     @id @default(autoincrement())
+  plate    String
+  vin      String?
+  category String?
+  info     String  @db.VarChar(2000)
+}

@@ -7,6 +7,7 @@ import "react-datetime/css/react-datetime.css";
 import AppLoader from "./app/common/AppLoader";
 import { useQuery, QueryClient, QueryClientProvider } from "react-query";
 import "./app/i18n";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const queryCache = new QueryClient();
 
@@ -16,6 +17,7 @@ ReactDOM.render(
       <Suspense fallback={<AppLoader />}>
         <QueryClientProvider client={queryCache}>
           <App />
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </Suspense>
     </BrowserRouter>
