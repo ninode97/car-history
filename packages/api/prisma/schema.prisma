@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Brand {
+  id      Int     @id @default(autoincrement())
+  name    String  @unique
+  addedBy User    @relation(fields: [userId], references: [id])
+  userId  Int
+  models  Model[]
+}
+
+model Model {
+  id      Int    @id @default(autoincrement())
+  name    String
+  addedBy User   @relation(fields: [userId], references: [id])
+  userId  Int
+  Brand   Brand? @relation(fields: [brandId], references: [id])
+  brandId Int?
+  Car     Car[]
+}
+
+model User {
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
+  hash       String
+  name       String
+  surname    String
+  birthdate  DateTime
+  isBlocked  Boolean      @default(false)
+  Company    Company[]
+  Car        Car[]
+  Brand      Brand[]
+  Model      Model[]
+  CarHistory CarHistory[]
+  role       UserRole     @relation(fields: [userRoleId], references: [id])
+  userRoleId Int
+}
+
+model UserRole {
+  id   Int    @unique
+  name String @unique
+  User User[]
+}
+
+model Company {
+  id      Int    @id @default(autoincrement())
+  name    String @unique
+  addedBy User   @relation(fields: [userId], references: [id])
+  userId  Int
+  Car     Car[]
+}
+
+model Car {
+  id                           Int          @id @default(autoincrement())
+  plateCode                    String
+  vinCode                      String       @unique
+  addedBy                      User         @relation(fields: [userId], references: [id])
+  userId                       Int
+  ownedByCompany               Company      @relation(fields: [companyId], references: [id])
+  companyId                    Int
+  model                        Model        @relation(fields: [modelId], references: [id])
+  modelId                      Int
+  year                         Int
+  acquiredDate                 DateTime
+  insuranceValidFrom           DateTime
+  insuranceExpiresOn           DateTime
+  technicalInspectionValidFrom DateTime
+  technicalInspectionExpiresOn DateTime
+  CarHistory                   CarHistory[]
+}
+
+model CarHistory {
+  id                Int               @id @default(autoincrement())
+  car               Car               @relation(fields: [carId], references: [id])
+  carId             Int
+  createdAt         DateTime
+  createdBy         User              @relation(fields: [userId], references: [id])
+  userId            Int
+  codeForAccounting CodeForAccounting @relation(fields: [code], references: [code])
+  code              String
+  price             Decimal           @db.Money
+  billCode          String
+  serviceCompany    String
+  serviceName       String
+  productName       String
+
+}
+
+model CodeForAccounting {
+  code       String       @unique
+  CarHistory CarHistory[]
+}

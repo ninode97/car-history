@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=fallback");
+
+@tailwind base;
+@tailwind components;
+
+// Additional styles
+@import "additional-styles/utility-patterns.scss";
+@import "additional-styles/range-slider.scss";
+@import "additional-styles/toggle-switch.scss";
+@import "additional-styles/flatpickr.scss";
+@import "additional-styles/theme.scss";
+
+@tailwind utilities;
+
+.dateTimePicker {
+  input {
+    --tw-border-opacity: 1;
+    border-color: rgb(203 213 225 / var(--tw-border-opacity));
+
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.5715;
+
+    &:hover {
+      --tw-border-opacity: 1;
+      border-color: rgb(99 102 241 / var(--tw-border-opacity));
+    }
+  }
+
+  .rdtPicker {
+    border: 1px solid rgba(99, 101, 241, 0.651) !important;
+  }
+
+  .rdtPrev,
+  .rdtSwitch,
+  .rdtNext {
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(99, 102, 241) !important;
+      color: white;
+    }
+  }
+
+  td.rdtDay.rdtActive {
+    background-color: rgb(99, 102, 241) !important;
+    color: white !important;
+  }
+  td.rdtDay {
+    &:hover {
+      background-color: rgba(99, 101, 241, 0.596) !important;
+      color: white !important;
+    }
+  }
+
+  .rdtTimeToggle,
+  .rdtBtn {
+    &:hover {
+      background-color: rgb(99, 102, 241) !important;
+      color: white;
+      cursor: pointer;
+    }
+  }
+}

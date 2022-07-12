@@ -1,0 +1,10 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "dev": "npx lerna run start:dev --parallel"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}

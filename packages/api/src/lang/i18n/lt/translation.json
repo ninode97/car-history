@@ -1,0 +1,26 @@
+{
+    "test": "Sveiki",
+    "sidebar": {
+        "dashboard": "Pradžia",
+        "cars": "Automobiliai",
+        "feed": "Srautas",
+        "users": "Naudotojai",
+        "companies": "Įmonės",
+        "history": "Istorija"
+    },
+    "user": {
+        "grid": {
+            "email": "El. paštas",
+            "name": "Vardas",
+            "lastname": "Pavardė",
+            "role": "Rolė",
+            "actions": "Veiksmai"
+        }
+    },
+    "roles": {
+        "role": "Rolė",
+        "administrator": "Administratorius",
+        "moderator": "Moderatorius",
+        "regular": "Naudotojas"
+    }
+}

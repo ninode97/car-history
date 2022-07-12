@@ -1,0 +1,26 @@
+{
+    "test": "Hello World",
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "cars": "Cars",
+        "feed": "Feed",
+        "users": "Users",
+        "companies": "Companies",
+        "history": "History"
+    },
+    "user": {
+        "grid": {
+            "email": "Email",
+            "name": "name",
+            "lastname": "Surname",
+            "role": "Role",
+            "actions": "Actions"
+        }
+    },
+    "roles": {
+        "role": "Rolė",
+        "administrator": "Admin",
+        "moderator": "Moderator",
+        "regular": "Regular"
+    }
+}
