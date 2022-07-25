@@ -101,9 +101,17 @@ model CodeForAccounting {
 }
 
 model HistoryV2 {
-  id       Int     @id @default(autoincrement())
-  plate    String
-  vin      String?
-  category String?
-  info     String  @db.VarChar(2000)
+  id        Int      @id @default(autoincrement())
+  km        Int
+  plate     String
+  vin       String?
+  category  String?
+  info      String   @db.VarChar(2000)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CategoryV2 {
+  id   Int    @id @default(autoincrement())
+  name String
 }

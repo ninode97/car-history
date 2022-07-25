@@ -12,6 +12,7 @@ import {
 } from "../../app/models/history";
 import useDebounce from "../../app/hooks/useDebounce";
 import TextInput from "../../app/common/FormInputs/TextInput";
+import { ToastMessage } from "../../App";
 
 const History = () => {
   const [selectedOption, setSelectedOption] = useState<{
@@ -40,8 +41,10 @@ const History = () => {
     }
   );
 
+  const cacheKey = selectedOption && selectedOption.value;
+
   const historyEntriesRequest = useQuery<any, any, GetHistoryResponse, any>(
-    ["historyEntries", selectedOption.value],
+    ["historyEntries", cacheKey],
     () => api.History.get({ plate: selectedOption?.value || "" })
   );
 
@@ -49,10 +52,12 @@ const History = () => {
     onSuccess: (data) => {
       console.log(data);
       const message = "success";
-      alert(message);
+      ToastMessage("success", "Successfully added");
     },
-    onError: () => {
-      alert("there was an error");
+    onError: (err: any) => {
+      console.log(err);
+      const message = err.message || err;
+      ToastMessage("error", message);
     },
     // onSettled: () => {
     //   queryClient.invalidateQueries("create");
@@ -99,7 +104,7 @@ const History = () => {
                 setSelectedOption(value);
                 setHistoryRecord({
                   ...historyRecord,
-                  plate: value.value,
+                  plate: (value && value.value) || "",
                 });
               }}
               isClearable={true}
